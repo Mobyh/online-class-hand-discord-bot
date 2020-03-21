@@ -1,0 +1,16 @@
+{
+  "name": "banana2",
+  "version": "1.0.0",
+  "description": "Banana bot with discord.js",
+  "main": "bot.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Mobyh-Ana/DocRob",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.0.2",
+    "https": "^1.0.0",
+    "winston": "^3.2.1"
+  }
+}

@@ -1,0 +1,24 @@
+---
+stages:
+  - build
+  - test
+  - deploy
+build-docker : 
+    stage : build
+    script :
+        - npm install
+        - printf "{\"token\":\"$DISCORD_TOKEN\"}" > auth.json
+        - docker build -t banana .
+        - rm auth.json
+deploy-az :
+    stage : deploy
+    script :
+        - docker tag banana cs4783registry.azurecr.io/banana
+        - az login --service-principal -u $APP_ID -p $PW --tenant $TENANT
+        - az aks get-credentials --resource-group myResourceGroup --name cs4783Cluster
+        - az acr login --name cs4783registry
+        - docker push cs4783registry.azurecr.io/banana
+        - kubectl apply -f azure.yaml
+        - kubectl set image deployment banana banana=cs4783registry.azurecr.io/banana:latest
+        - kubectl set image deployment banana banana=cs4783registry.azurecr.io/banana
+...
